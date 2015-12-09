@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<casa xmlns="http://java.sun.com/xml/ns/casa" xmlns:ns1="http://operations.me.org/" xmlns:ns2="opCompositeApp" xmlns:ns3="http://j2ee.netbeans.org/wsdl/OperationsBpel/src/OperationsBpel" xmlns:ns4="http://enterprise.netbeans.org/bpel/OperationsBpel/operationsBpel" xmlns:xlink="http://www.w3.org/2000/xlink">
+    <endpoints>
+        <endpoint endpoint-name="OperationsPort" interface-name="ns1:Operations" name="endpoint1" service-name="ns1:Operations"/>
+        <endpoint endpoint-name="opRequestPort" interface-name="ns3:OperationsBpelPortType" name="endpoint2" service-name="ns2:opCompositeAppService1"/>
+        <endpoint display-name="BpelImplementation" endpoint-name="OperationsBpelPortTypeRole_myRole" file-path="operationsBpel.bpel" interface-name="ns3:OperationsBpelPortType" name="endpoint3" process-name="operationsBpel" service-name="ns4:BpelImplementation"/>
+        <endpoint display-name="EjbImplementation" endpoint-name="OperationsRole_partnerRole" file-path="operationsBpel.bpel" interface-name="ns1:Operations" name="endpoint4" process-name="operationsBpel" service-name="ns4:EjbImplementation"/>
+    </endpoints>
+    <service-units>
+        <service-engine-service-unit artifacts-zip="OperationsBpel.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="opCompositeApp-OperationsBpel" unit-name="OperationsBpel" unknown="false" x="143" y="97">
+            <provides endpoint="endpoint3"/>
+            <consumes endpoint="endpoint4"/>
+        </service-engine-service-unit>
+        <binding-component-service-unit artifacts-zip="sun-http-binding.jar" component-name="sun-http-binding" description="Represents this Service Unit" name="opCompositeApp-sun-http-binding" unit-name="sun-http-binding">
+            <ports>
+                <port bindingType="soap" x="67" y="307">
+                    <link xlink:href="../jbiasa/opCompositeApp.wsdl#xpointer(/definitions/service[@name='opCompositeAppService1']/port[@name='opRequestPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint2"/>
+                    <provides endpoint="endpoint2"/>
+                </port>
+                <port x="67" y="37">
+                    <link xlink:href="../jbiServiceUnits/OperationsBpel/localhost_8080/Operations/Operations.wsdl#xpointer(/definitions/service[@name='Operations']/port[@name='OperationsPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint1"/>
+                    <provides endpoint="endpoint1"/>
+                </port>
+            </ports>
+        </binding-component-service-unit>
+    </service-units>
+    <connections>
+        <connection consumer="endpoint4" provider="endpoint1" state="unchanged"/>
+        <connection consumer="endpoint2" provider="endpoint3" state="new"/>
+    </connections>
+    <porttypes>
+        <link xlink:href="../jbiasa/opCompositeApp.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/opCompositeApp.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/OperationsBpel/localhost_8080/Operations/Operations.wsdl#xpointer(/definitions/portType[@name='Operations'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/OperationsBpel/OperationsBpel.wsdl#xpointer(/definitions/portType[@name='OperationsBpelPortType'])" xlink:type="simple"/>
+    </porttypes>
+    <bindings>
+        <link xlink:href="../jbiasa/opCompositeApp.wsdl#xpointer(/definitions/binding[@name='casaBinding1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/opCompositeApp.wsdl#xpointer(/definitions/binding[@name='casaBinding1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/OperationsBpel/localhost_8080/Operations/Operations.wsdl#xpointer(/definitions/binding[@name='OperationsPortBinding'])" xlink:type="simple"/>
+    </bindings>
+    <services>
+        <link xlink:href="../jbiasa/opCompositeApp.wsdl#xpointer(/definitions/service[@name='opCompositeAppService1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/opCompositeApp.wsdl#xpointer(/definitions/service[@name='opCompositeAppService1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/OperationsBpel/localhost_8080/Operations/Operations.wsdl#xpointer(/definitions/service[@name='Operations'])" xlink:type="simple"/>
+    </services>
+    <regions>
+        <region name="WSDL Endpoints" width="150"/>
+        <region name="JBI Modules" width="500"/>
+        <region name="External Modules" width="200"/>
+    </regions>
+</casa>

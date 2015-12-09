@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="loanRequestor"
+    targetNamespace="http://enterprise.netbeans.org/bpel/LoanRequestor/loanRequestor"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/LoanRequestor/loanRequestor"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://xml.netbeans.org/schema/LoanRequestor">
+    <import namespace="http://j2ee.netbeans.org/wsdl/LoanRequestor/src/LoanRequestor" location="LoanRequestor.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/LoanProcessorWrapper" location="LoanProcessorWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://loanprocessor.me.org/" location="http://localhost:8080/LoanProcessor/LoanProcessor?WSDL" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="EjbImplementation" xmlns:tns="http://enterprise.netbeans.org/bpel/LoanProcessorWrapper" partnerLinkType="tns:LoanProcessorLinkType" partnerRole="LoanProcessorRole"/>
+        <partnerLink name="BpelImplementation" xmlns:tns="http://j2ee.netbeans.org/wsdl/LoanRequestor/src/LoanRequestor" partnerLinkType="tns:LoanRequestor" myRole="LoanRequestorPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="LoanRequestorOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/LoanRequestor/src/LoanRequestor" messageType="tns:LoanRequestorOperationResponse"/>
+        <variable name="ProcessApplicOperationOut" xmlns:tns="http://loanprocessor.me.org/" messageType="tns:processApplicOperationResponse"/>
+        <variable name="ProcessApplicOperationIn" xmlns:tns="http://loanprocessor.me.org/" messageType="tns:processApplicOperation"/>
+        <variable name="LoanRequestorOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/LoanRequestor/src/LoanRequestor" messageType="tns:LoanRequestorOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="ReceiveFromCustomer" createInstance="yes" partnerLink="BpelImplementation" operation="LoanRequestorOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/LoanRequestor/src/LoanRequestor" portType="tns:LoanRequestorPortType" variable="LoanRequestorOperationIn"/>
+        <assign name="CopyCustomerInfo">
+            <copy>
+                <from>$LoanRequestorOperationIn.requestLoanMessage/ns0:socialSecurityNumber</from>
+                <to>$ProcessApplicOperationIn.parameters/socialSecurityNumber</to>
+            </copy>
+            <copy>
+                <from>$LoanRequestorOperationIn.requestLoanMessage/ns0:applicantName</from>
+                <to>$ProcessApplicOperationIn.parameters/applicantName</to>
+            </copy>
+            <copy>
+                <from>$LoanRequestorOperationIn.requestLoanMessage/ns0:applicantAddress</from>
+                <to>$ProcessApplicOperationIn.parameters/applicantAddress</to>
+            </copy>
+            <copy>
+                <from>$LoanRequestorOperationIn.requestLoanMessage/ns0:applicantEmailAddress</from>
+                <to>$ProcessApplicOperationIn.parameters/applicantEmailAddress</to>
+            </copy>
+            <copy>
+                <from>$LoanRequestorOperationIn.requestLoanMessage/ns0:applicantAge</from>
+                <to>$ProcessApplicOperationIn.parameters/applicantAge</to>
+            </copy>
+            <copy>
+                <from>$LoanRequestorOperationIn.requestLoanMessage/ns0:applicantGender</from>
+                <to>$ProcessApplicOperationIn.parameters/applicantGender</to>
+            </copy>
+            <copy>
+                <from>$LoanRequestorOperationIn.requestLoanMessage/ns0:annualSalary</from>
+                <to>$ProcessApplicOperationIn.parameters/annualSalary</to>
+            </copy>
+            <copy>
+                <from>$LoanRequestorOperationIn.requestLoanMessage/ns0:amountRequested</from>
+                <to>$ProcessApplicOperationIn.parameters/amountRequested</to>
+            </copy>
+        </assign>
+        <invoke name="InvokeLoanProcessorEJB" partnerLink="EjbImplementation" operation="processApplicOperation" xmlns:tns="http://loanprocessor.me.org/" portType="tns:LoanProcessor" inputVariable="ProcessApplicOperationIn" outputVariable="ProcessApplicOperationOut"/>
+        <assign name="CopyLoanStatus">
+            <copy>
+                <from>$ProcessApplicOperationOut.parameters/return</from>
+                <to>$LoanRequestorOperationOut.responsePart/ns0:return</to>
+            </copy>
+        </assign>
+        <reply name="ReplyToCustomer" partnerLink="BpelImplementation" operation="LoanRequestorOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/LoanRequestor/src/LoanRequestor" portType="tns:LoanRequestorPortType" variable="LoanRequestorOperationOut"/>
+    </sequence>
+</process>

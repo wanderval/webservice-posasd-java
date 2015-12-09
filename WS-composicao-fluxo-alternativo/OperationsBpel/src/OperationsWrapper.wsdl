@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OperationsWrapper" targetNamespace="http://enterprise.netbeans.org/bpel/OperationsWrapper" xmlns:tns="http://enterprise.netbeans.org/bpel/OperationsWrapper" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns="http://operations.me.org/">
+    <import location="http://localhost:8080/Operations/Operations?WSDL" namespace="http://operations.me.org/"/>
+    <plnk:partnerLinkType name="OperationsLinkType">
+        <plnk:role name="OperationsRole" portType="ns:Operations"/>
+    </plnk:partnerLinkType>
+</definitions>

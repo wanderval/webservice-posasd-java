@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<casa xmlns="http://java.sun.com/xml/ns/casa" xmlns:ns1="http://loanprocessor.me.org/" xmlns:ns2="LoanRequestorCompositeApp" xmlns:ns3="http://j2ee.netbeans.org/wsdl/LoanRequestor/src/LoanRequestor" xmlns:ns4="http://enterprise.netbeans.org/bpel/LoanRequestor/loanRequestor" xmlns:xlink="http://www.w3.org/2000/xlink">
+    <endpoints>
+        <endpoint endpoint-name="LoanProcessorPort" interface-name="ns1:LoanProcessor" name="endpoint1" service-name="ns1:LoanProcessor"/>
+        <endpoint endpoint-name="LoanRequestPort" interface-name="ns3:LoanRequestorPortType" name="endpoint2" service-name="ns2:LoanRequestorCompositeAppService1"/>
+        <endpoint display-name="BpelImplementation" endpoint-name="LoanRequestorPortTypeRole_myRole" file-path="loanRequestor.bpel" interface-name="ns3:LoanRequestorPortType" name="endpoint3" process-name="loanRequestor" service-name="ns4:BpelImplementation"/>
+        <endpoint display-name="EjbImplementation" endpoint-name="LoanProcessorRole_partnerRole" file-path="loanRequestor.bpel" interface-name="ns1:LoanProcessor" name="endpoint4" process-name="loanRequestor" service-name="ns4:EjbImplementation"/>
+    </endpoints>
+    <service-units>
+        <service-engine-service-unit artifacts-zip="LoanRequestor.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="LoanRequestorCompositeApp-LoanRequestor" unit-name="LoanRequestor" unknown="false" x="145" y="97">
+            <provides endpoint="endpoint3"/>
+            <consumes endpoint="endpoint4"/>
+        </service-engine-service-unit>
+        <binding-component-service-unit artifacts-zip="sun-http-binding.jar" component-name="sun-http-binding" description="Represents this Service Unit" name="LoanRequestorCompositeApp-sun-http-binding" unit-name="sun-http-binding">
+            <ports>
+                <port bindingType="soap" x="67" y="411">
+                    <link xlink:href="../jbiasa/LoanRequestorCompositeApp.wsdl#xpointer(/definitions/service[@name='LoanRequestorCompositeAppService1']/port[@name='LoanRequestPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint2"/>
+                    <provides endpoint="endpoint2"/>
+                </port>
+                <port x="67" y="37">
+                    <link xlink:href="../jbiServiceUnits/LoanRequestor/localhost_8080/LoanProcessor/LoanProcessor.wsdl#xpointer(/definitions/service[@name='LoanProcessor']/port[@name='LoanProcessorPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint1"/>
+                    <provides endpoint="endpoint1"/>
+                </port>
+            </ports>
+        </binding-component-service-unit>
+    </service-units>
+    <connections>
+        <connection consumer="endpoint2" provider="endpoint3" state="new"/>
+        <connection consumer="endpoint4" provider="endpoint1" state="unchanged"/>
+    </connections>
+    <porttypes>
+        <link xlink:href="../jbiasa/LoanRequestorCompositeApp.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/LoanRequestor/LoanRequestor.wsdl#xpointer(/definitions/portType[@name='LoanRequestorPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/LoanRequestor/localhost_8080/LoanProcessor/LoanProcessor.wsdl#xpointer(/definitions/portType[@name='LoanProcessor'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/LoanRequestorCompositeApp.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
+    </porttypes>
+    <bindings>
+        <link xlink:href="../jbiasa/LoanRequestorCompositeApp.wsdl#xpointer(/definitions/binding[@name='casaBinding1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/LoanRequestor/localhost_8080/LoanProcessor/LoanProcessor.wsdl#xpointer(/definitions/binding[@name='LoanProcessorPortBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/LoanRequestorCompositeApp.wsdl#xpointer(/definitions/binding[@name='casaBinding1'])" xlink:type="simple"/>
+    </bindings>
+    <services>
+        <link xlink:href="../jbiasa/LoanRequestorCompositeApp.wsdl#xpointer(/definitions/service[@name='LoanRequestorCompositeAppService1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/LoanRequestor/localhost_8080/LoanProcessor/LoanProcessor.wsdl#xpointer(/definitions/service[@name='LoanProcessor'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/LoanRequestorCompositeApp.wsdl#xpointer(/definitions/service[@name='LoanRequestorCompositeAppService1'])" xlink:type="simple"/>
+    </services>
+    <regions>
+        <region name="WSDL Endpoints" width="150"/>
+        <region name="JBI Modules" width="500"/>
+        <region name="External Modules" width="200"/>
+    </regions>
+</casa>

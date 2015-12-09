@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns0="http://enterprise.netbeans.org/bpel/LoanRequestor/loanRequestor" xmlns:ns1="http://loanprocessor.me.org/" xmlns:ns2="http://j2ee.netbeans.org/wsdl/LoanRequestor/src/LoanRequestor" xmlns:ns3="http://www.sun.com/jbi/descriptor/service-unit" version="1.0">
+    <services binding-component="false">
+        <provides endpoint-name="LoanRequestorPortTypeRole_myRole" interface-name="ns2:LoanRequestorPortType" service-name="ns0:BpelImplementation">
+            <ns3:display-name>BpelImplementation</ns3:display-name>
+            <ns3:process-name>loanRequestor</ns3:process-name>
+            <ns3:file-path>loanRequestor.bpel</ns3:file-path>
+        </provides>
+        <consumes endpoint-name="LoanProcessorRole_partnerRole" interface-name="ns1:LoanProcessor" service-name="ns0:EjbImplementation">
+            <ns3:display-name>EjbImplementation</ns3:display-name>
+            <ns3:process-name>loanRequestor</ns3:process-name>
+            <ns3:file-path>loanRequestor.bpel</ns3:file-path>
+        </consumes>
+    </services>
+</jbi>

@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.1.1 (branches/2.1-6844; 2011-07-29T12:07:24+0000) JAXWS-RI/2.2.5 JAXWS/2.2. --><xs:schema xmlns:tns="http://loanprocessor.me.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://loanprocessor.me.org/">
+
+<xs:element name="hello" type="tns:hello"/>
+
+<xs:element name="helloResponse" type="tns:helloResponse"/>
+
+<xs:element name="processApplicOperation" type="tns:processApplicOperation"/>
+
+<xs:element name="processApplicOperationResponse" type="tns:processApplicOperationResponse"/>
+
+<xs:complexType name="hello">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="helloResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="processApplicOperation">
+<xs:sequence>
+<xs:element name="socialSecurityNumber" type="xs:string" minOccurs="0"/>
+<xs:element name="applicantName" type="xs:string" minOccurs="0"/>
+<xs:element name="applicantAddress" type="xs:string" minOccurs="0"/>
+<xs:element name="applicantEmailAddress" type="xs:string" minOccurs="0"/>
+<xs:element name="applicantAge" type="xs:int" minOccurs="0"/>
+<xs:element name="applicantGender" type="xs:string" minOccurs="0"/>
+<xs:element name="annualSalary" type="xs:double" minOccurs="0"/>
+<xs:element name="amountRequested" type="xs:double" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="processApplicOperationResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

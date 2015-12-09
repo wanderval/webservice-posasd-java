@@ -1,0 +1,14 @@
+<soapenv:Envelope xsi:schemaLocation="http://schemas.xmlsoap.org/soap/envelope/ http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:loan="http://xml.netbeans.org/schema/LoanRequestor">
+  <soapenv:Body>
+    <loan:processApplicElement>
+      <loan:socialSecurityNumber>111-11-1111</loan:socialSecurityNumber>
+        <loan:applicantName>Joao da Silva</loan:applicantName>
+        <loan:applicantAddress>Rua das Flores, 234</loan:applicantAddress>
+        <loan:applicantEmailAddress>jsilva@gmail.com</loan:applicantEmailAddress>
+        <loan:applicantAge>36</loan:applicantAge>
+        <loan:applicantGender>male</loan:applicantGender>
+        <loan:annualSalary>100000</loan:annualSalary>
+        <loan:amountRequested>1000000</loan:amountRequested>
+    </loan:processApplicElement>
+  </soapenv:Body>
+</soapenv:Envelope>

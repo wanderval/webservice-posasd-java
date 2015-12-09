@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://xml.netbeans.org/schema/OperationsBpel"
+    xmlns:tns="http://xml.netbeans.org/schema/OperationsBpel"
+    elementFormDefault="qualified">
+    <xsd:complexType name="opType">
+        <xsd:sequence>
+            <xsd:element name="opName" nillable="true" type="xsd:string"/>
+            <xsd:element name="num1" nillable="true" type="xsd:int"/>
+            <xsd:element name="num2" nillable="true" type="xsd:int"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="opRespType">
+        <xsd:sequence>
+            <xsd:element name="return" type="xsd:int"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="opRespElement" type="tns:opRespType"/>
+    <xsd:element name="opElement" type="tns:opType"/>
+</xsd:schema>

@@ -1,0 +1,9 @@
+<soapenv:Envelope xsi:schemaLocation="http://schemas.xmlsoap.org/soap/envelope/ http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:oper="http://xml.netbeans.org/schema/OperationsBpel">
+  <soapenv:Body>
+    <oper:opElement>
+        <oper:opName>add</oper:opName>
+        <oper:num1>2</oper:num1>
+        <oper:num2>3</oper:num2>
+    </oper:opElement>
+  </soapenv:Body>
+</soapenv:Envelope>

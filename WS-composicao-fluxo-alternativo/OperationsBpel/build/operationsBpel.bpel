@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="operationsBpel"
+    targetNamespace="http://enterprise.netbeans.org/bpel/OperationsBpel/operationsBpel"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/OperationsBpel/operationsBpel"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://xml.netbeans.org/schema/OperationsBpel">
+    <import namespace="http://j2ee.netbeans.org/wsdl/OperationsBpel/src/OperationsBpel" location="OperationsBpel.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/OperationsWrapper" location="OperationsWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://operations.me.org/" location="http://localhost:8080/Operations/Operations?WSDL" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="EjbImplementation" xmlns:tns="http://enterprise.netbeans.org/bpel/OperationsWrapper" partnerLinkType="tns:OperationsLinkType" partnerRole="OperationsRole"/>
+        <partnerLink name="BpelImplementation" xmlns:tns="http://j2ee.netbeans.org/wsdl/OperationsBpel/src/OperationsBpel" partnerLinkType="tns:OperationsBpel" myRole="OperationsBpelPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="MultOut" xmlns:tns="http://operations.me.org/" messageType="tns:multResponse"/>
+        <variable name="MultIn" xmlns:tns="http://operations.me.org/" messageType="tns:mult"/>
+        <variable name="AddOut" xmlns:tns="http://operations.me.org/" messageType="tns:addResponse"/>
+        <variable name="AddIn" xmlns:tns="http://operations.me.org/" messageType="tns:add"/>
+        <variable name="OperationsBpelOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/OperationsBpel/src/OperationsBpel" messageType="tns:OperationsBpelOperationResponse"/>
+        <variable name="OperationsBpelOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/OperationsBpel/src/OperationsBpel" messageType="tns:OperationsBpelOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="ReceiveFromCustomer" createInstance="yes" partnerLink="BpelImplementation" operation="OperationsBpelOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/OperationsBpel/src/OperationsBpel" portType="tns:OperationsBpelPortType" variable="OperationsBpelOperationIn"/>
+        <if name="TestOperationName">
+            <condition>$OperationsBpelOperationIn.opRequest/ns0:opName = 'add'</condition>
+            <sequence name="Sequence1">
+                <assign name="CopyInfoAdd">
+                    <copy>
+                        <from>$OperationsBpelOperationIn.opRequest/ns0:num1</from>
+                        <to>$AddIn.parameters/num1</to>
+                    </copy>
+                    <copy>
+                        <from>$OperationsBpelOperationIn.opRequest/ns0:num2</from>
+                        <to>$AddIn.parameters/num2</to>
+                    </copy>
+                </assign>
+                <invoke name="InvokeAdd" partnerLink="EjbImplementation" operation="add" xmlns:tns="http://operations.me.org/" portType="tns:Operations" inputVariable="AddIn" outputVariable="AddOut"/>
+                <assign name="CopyAddResult">
+                    <copy>
+                        <from>$AddOut.parameters/return</from>
+                        <to>$OperationsBpelOperationOut.opResponse/ns0:return</to>
+                    </copy>
+                </assign>
+            </sequence>
+            <else>
+                <sequence name="Sequence2">
+                    <assign name="CopyInfoMult">
+                        <copy>
+                            <from>$OperationsBpelOperationIn.opRequest/ns0:num1</from>
+                            <to>$MultIn.parameters/num1</to>
+                        </copy>
+                        <copy>
+                            <from>$OperationsBpelOperationIn.opRequest/ns0:num2</from>
+                            <to>$MultIn.parameters/num2</to>
+                        </copy>
+                    </assign>
+                    <invoke name="InvokeMult" partnerLink="EjbImplementation" operation="mult" xmlns:tns="http://operations.me.org/" portType="tns:Operations" inputVariable="MultIn" outputVariable="MultOut"/>
+                    <assign name="CopyMultResult">
+                        <copy>
+                            <from>$MultOut.parameters/return</from>
+                            <to>$OperationsBpelOperationOut.opResponse/ns0:return</to>
+                        </copy>
+                    </assign>
+                </sequence>
+            </else>
+        </if>
+        <reply name="ReplyToCustomer" partnerLink="BpelImplementation" operation="OperationsBpelOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/OperationsBpel/src/OperationsBpel" portType="tns:OperationsBpelPortType" variable="OperationsBpelOperationOut"/>
+    </sequence>
+</process>

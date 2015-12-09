@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://schemas.xmlsoap.org/soap/envelope/ http://schemas.xmlsoap.org/soap/envelope/">
+  <SOAP-ENV:Body>
+    <processApplicRespElement xmlns="http://xml.netbeans.org/schema/LoanRequestor" xmlns:msgns="http://j2ee.netbeans.org/wsdl/LoanRequestor/src/LoanRequestor">
+      <return>Loan Application REJECTED - Reason: Under-aged 15. Age needs to be over 18 years to qualify.</return>
+    </processApplicRespElement>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
